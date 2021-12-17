@@ -1,0 +1,70 @@
+---
+title: "DS_Final_Instructions"
+output: html_document
+---
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(gplots)
+library(dplyr)
+library(readr)
+library(gganimate)
+library(gifski)
+library(plotly)
+```
+
+```{r}
+library(readxl)
+X3_pointers <- read_excel("Downloads/3 pointers.xlsx") #Takes file from downloads and names it as a dataset.
+`3PA` <- ggplot(X3_pointers, aes(x=`Season`, y=`3PA`))+ #Creating plot from the data given, with Season on x-axis and 3PA on y-axis.
+  geom_line(aes(group=5, col="red"))+ #Creates a line plot using the data.
+  theme(legend.position = "None")+ #Makes it so there is no legend on the graph.
+  ggtitle("3PA per Game by Season")+ #Titling the graph.
+  xlab("Season")+ylab("Average 3PA per Game")+ #Labeling each axis.
+  transition_reveal(Season) #Creates the animation to go smoothly, rather than appearing point by point.
+`3PA`
+animate(`3PA`, duration = 9, fps = 3, width=500, height=400, renderer = gifski_renderer()) #Animates the graph as a whole, duration being 9 seconds and frames per second being 3. The width and height are the dimensions of the graph.
+anim_save("3PAAnimated2.gif") #Saves the animation as a file.
+```
+1. In this visualization, it is clear that there has been a major increase in 3-pointers attempted per game over the last 10 seasons. Back in the 2011-12 season, the league average was around just 18 attempts per game, and in last years season the average got to 34.6, an increase of 92% showing that year by year there seems to be an increase in the amount of 3-pointers attempted since it is now deemed as a more valuable and efficient shot than it was in the past.
+```{r}
+library(readxl)
+X3_pointers <- read_excel("Downloads/3 pointers.xlsx") #Takes file from downloads and names it as a dataset.
+`3PM` <- ggplot(X3_pointers, aes(x=`Season`, y=`3PM`))+ #Creating plot from the data given, with Season on x-axis and 3PM on y-axis.
+  geom_line(aes(group=5, color="red"))+ #Creates a line plot using the data.
+  theme(legend.position = "None")+ #Makes it so there is no legend on the graph.
+  ggtitle("3PM per Game by Season")+ #Titling the graph.
+  xlab("Season")+ylab("Average 3PM per Game")+ #Labeling each axis.
+  transition_reveal(Season) #Creates the animation to go smoothly, rather than appearing point by point.
+`3PM`
+animate(`3PM`, duration = 9, fps = 3, width=500, height=400, renderer = gifski_renderer()) #Animates the graph as a whole, duration being 9 seconds and frames per second being 3. The width and height are the dimensions of the graph.
+anim_save("3PMAnimated.gif") #Saves the animation as a file.
+
+```
+2. Another factor we can look at is how the average makes per game adjusted as the average attempts per game increased. Obviously, there is an increase in this as well, where in the 2011-2012 season the average makes per game was 7.2, and now it has increased to 12.7, an increase of 76%, just slightly greater than the attempts per game increase. So clearly, as teams have begun to shoot more threes, teams have also began making more 3's as the shot is becoming more valuable.
+```{r}
+library(readxl)
+X3_pointers <- read_excel("Downloads/3 pointers.xlsx") #Takes file from downloads and names it as a dataset.
+`3P%` <- ggplot(X3_pointers, aes(x=`Season`, y=`3P%`))+ #Creating plot from the data given, with Season on x-axis and 3P% on y-axis.
+   geom_line(aes(group=5, color="red"))+ #Creates a line plot using the data.
+  theme(legend.position = "None")+ #Makes it so there is no legend on the graph.
+  ggtitle("3P% by Season")+ #Titling the graph.
+  xlab("Season")+ylab("Average 3P%")+  #Labeling each axis.
+  transition_reveal(Season) #Creates the animation to go smoothly, rather than appearing point by point.
+`3P%`
+animate(`3P%`, duration = 9, fps = 3, width=500, height=400, renderer = gifski_renderer()) #Animates the graph as a whole, duration being 9 seconds and frames per second being 3. The width and height are the dimensions of the graph.
+anim_save("3PM%nimated.gif") #Saves the animation as a file.
+```
+3. Lastly, we can see how both the increase in attempts and makes per game affects the overall 3-points percentage. As you can see, the data fluctuates year by year, but in this short 10-year visualization, it seems like there is is an increase, although it seems to always change each year. Though I'm sure if you were to look at the entire league history of 3-point percentage, that there would be an increase as players are becoming more skilled and are valuing the 3-point shot more and more.
+```{r}
+X3toW <- read_excel("Downloads/Data Science Final.xlsx") #Takes file from downloads and names it as a dataset.
+```
+```{r}
+pf <- ggplot(X3toW, aes(x=`3P%`, y=`Win %`, col= Team ))+ #Creates plot using data, with 3P% on x-axis and Win% on y-axis. Color coordinates each team. 
+  geom_point(show.legend = FALSE, alpha=0.75) #Creates point graph, without having the original legend. The alpha command sets the transparency of each point.
+ggplotly(pf) #Takes the plot and makes it interactive, showing what each point represents.
+```
+Here, we can look at the overall correlation between 3P% and teams Win % over the past 10 NBA seasons. Although the correlation isn't too strong, it is obvious that there is a relationship between shooting a higher 3P%, and ultimately the number of games you win. This shows that teams that to shoot the best from behind the arc, the more likely they are to win more games.
+
+
+
