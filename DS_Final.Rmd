@@ -1,0 +1,82 @@
+---
+title: "NBA 3PT Final Project"
+athor: "Tom Andrae, Lian Lincoln"
+output: html_document
+---
+```{r include=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(gplots)
+library(dplyr)
+library(readr)
+library(gganimate)
+library(gifski)
+library(plotly)
+```
+
+Do 3-Pointers Lead to Success?
+
+There has been an overall trend the last 10 years in the NBA. More and more teams are shooting 3's and we wanted to find out why. 
+
+```{r, echo = FALSE}
+library(readxl)
+X3_pointers <- read_excel("/Users/lianlincoln/Desktop/Data Science/3 pointers.xlsx")
+`3PA` <- ggplot(X3_pointers, aes(x=`Season`, y=`3PA`))+
+  geom_line(aes(group=5, col="red"))+
+  theme(legend.position = "None")+
+  ggtitle("3PA per Game by Season")+
+  xlab("Season")+ylab("Average 3PA per Game")+
+  transition_reveal(Season)
+`3PA`
+animate(`3PA`, duration = 9, fps = 3, width=500, height=400, renderer = gifski_renderer())
+anim_save("3PAAnimated2.gif")
+```
+
+In this visualization, it is clear that there has been a major increase in 3-pointers attempted per game over the last 10 seasons. Back in the 2011-12 season, the league average was around just 18 attempts per game, and in last years season the average got to 34.6, an increase of 88% showing that year by year there seems to be an increase in the amount of 3-pointers attempted since it is now deemed as a more valuable and efficient shot than it was in the past.
+
+```{r, echo=FALSE}
+library(readxl)
+X3_pointers <- read_excel("/Users/lianlincoln/Desktop/Data Science/3 pointers.xlsx")
+`3PM` <- ggplot(X3_pointers, aes(x=`Season`, y=`3PM`))+
+  geom_line(aes(group=5, color="red"))+
+  theme(legend.position = "None")+
+  ggtitle("3PM per Game by Season")+
+  xlab("Season")+ylab("Average 3PM per Game")+
+  transition_reveal(Season)
+`3PM`
+animate(`3PM`, duration = 9, fps = 3, width=500, height=400, renderer = gifski_renderer())
+anim_save("3PMAnimated.gif")
+
+
+```
+
+Another factor we can look at is how the average makes per game adjusted as the average attempts per game increased. Obviously, there is an increase in this as well, where in the 2011-2012 season the average makes per game was 7.2, and now it has increased to 12.7, an increase of 98%, just slightly greater than the attempts per game increase. So clearly, as teams have begun to shoot more threes, teams have also began making more 3's as the shot is becoming more valuable.
+
+```{r, echo=FALSE}
+library(readxl)
+X3_pointers <- read_excel("/Users/lianlincoln/Desktop/Data Science/3 pointers.xlsx")
+`3P%` <- ggplot(X3_pointers, aes(x=`Season`, y=`3P%`))+
+   geom_line(aes(group=5, color="red"))+
+  theme(legend.position = "None")+
+  ggtitle("3P% by Season")+
+  xlab("Season")+ylab("Average 3P%")+
+  transition_reveal(Season)
+`3P%`
+animate(`3P%`, duration = 9, fps = 3, width=500, height=400, renderer = gifski_renderer())
+anim_save("3PM%nimated.gif")
+```
+
+Lastly, we can see how both the increase in attempts and makes per game affects the overall 3-points percentage. As you can see, the data fluctuates year by year, but in this short 10-year visualization, it seems like there is is an increase, although it seems to always change each year. Though I'm sure if you were to look at the entire league history of 3-point percentage, that there would be an increase as players are becoming more skilled and are valuing the 3-point shot more and more.
+
+```{r, echo=FALSE}
+X3toW <- read_excel("/Users/lianlincoln/Desktop/Data Science/Data Science Final (4).xlsx")
+```
+```{r, echo=FALSE}
+pf <- ggplot(X3toW, aes(x=`3P%`, y=`Win %`, col= Team ))+
+  geom_point(show.legend = FALSE, alpha=0.75)
+ggplotly(pf)
+```
+
+Here, we can look at the overall correlation between 3P% and teams Win % over the past 10 NBA seasons. Although the correlation isn't too strong, it is obvious that there is a relationship between shooting a higher 3P%, and ultimately the number of games you win. This shows that teams that to shoot the best from behind the arc, the more likely they are to win more games.
+
+
